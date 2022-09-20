@@ -1,0 +1,78 @@
+{% extends '../asset/base.html' %}
+{% load static %}
+{% block content %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Attendence</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'backend:dashboard' %}">Home</a></li>
+          <li class="breadcrumb-item active">Classes</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{ dept1.name }}</h5>
+
+                <form action="{% url 'backend:confirm' assc.id %}" method="post">
+                  {% csrf_token %}
+  
+                <!-- Table with stripped rows -->
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Student</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for att in att_list %}
+                    <tr>
+                      <td>{{att.student.name}}</td>
+                      <td>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+
+                          {% if att.status %}
+                          <label class="btn btn-outline-success active">
+                              <input type="radio" name="{{ att.student.USN }}" id="option1" autocomplete="off" value="present" checked> Present
+                          </label>
+
+                          <label class="btn btn-outline-danger">
+                              <input type="radio" name="{{ att.student.USN }}" id="option2" autocomplete="off" value="absent"> Absent
+                          </label>
+                          {% else %}
+                          <label class="btn btn-outline-success">
+                              <input type="radio" name="{{ att.student.USN }}" id="option1" autocomplete="off" value="present" > Present
+                          </label>
+
+                          <label class="btn btn-outline-danger active">
+                              <input type="radio" name="{{ att.student.USN }}" id="option2" autocomplete="off" value="absent" checked> Absent
+                          </label>
+                          {% endif %}
+
+                        </div>
+                    </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <input class="btn btn-primary" type="submit" value="Submit">
+
+                <!-- End Table with stripped rows -->
+
+              </form>
+
+              </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+{% endblock %}

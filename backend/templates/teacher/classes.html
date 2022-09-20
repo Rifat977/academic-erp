@@ -1,0 +1,63 @@
+{% extends '../asset/base.html' %}
+{% load static %}
+{% block content %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>List of classes</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'backend:dashboard' %}">Home</a></li>
+          <li class="breadcrumb-item active">Classes</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"></h5>
+  
+                <!-- Table with stripped rows -->
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Class</th>
+                      <th scope="col">Course</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in teacher.assign_set.all %}
+                    <tr>
+                      <td>{{item.class_id}}</td>
+                      <td>{{item.course}}</td>
+                      <td>
+                        {% if choice == 1 %}
+                        <a class="btn btn-primary" href="{% url 'backend:class_date' item.id %}" role="button">Enter Attendance</a>
+                        <a class="btn btn-warning" href="{% url 'backend:extra_class' item.id %}">Extra Class</a>
+                        <a class="btn btn-danger" href="{% url 'backend:students' item.id %}">View Students</a>
+
+                    {% elif choice == 2 %}
+                        <a class="btn btn-primary" href="{% url 'backend:marks_list' item.id %}" role="button">Enter Marks</a>
+                        <a class="btn btn-danger" href="{% url 'backend:student_marks' item.id %}">View Students</a>
+                    {% elif choice == 3 %}
+                        <a class="btn btn-danger" href="#">Generate reports</a>
+                    {% endif %}
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <!-- End Table with stripped rows -->
+  
+              </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+{% endblock %}

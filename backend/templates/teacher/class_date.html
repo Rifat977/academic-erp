@@ -1,0 +1,67 @@
+{% extends '../asset/base.html' %}
+{% load static %}
+{% block content %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Class Date</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'backend:dashboard' %}">Home</a></li>
+          <li class="breadcrumb-item active">Classes</li>
+          <li class="breadcrumb-item active">Class Date</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"></h5>
+  
+                <!-- Table with stripped rows -->
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Date</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for a in att_list %}
+                    <tr>
+                        <td>{{ a.date }}</td>
+                        {% if a.status == 0 %}
+                            <td class="p-3 mb-2"><span class="badge bg-danger">Not Taken</span></td>
+                            <td>
+                                <a class="btn btn-primary" href="{% url 'backend:attendance' a.id %}" role="button">Enter Attendance</a>
+                                <a class="btn btn-warning" href="{% url 'backend:cancel_class' a.id %}">Cancel Class</>
+                            </td>
+
+                        {% elif a.status == 1 %}
+                            <td class="p-3 mb-2"><span class="badge bg-success">Taken</span></td>
+                            <td><a class="btn btn-secondary" href="{% url 'backend:edit_attendance' a.id %}" role="button">Edit Attendance</a> </td>
+
+                        {% else %}
+                            <td class="p-3 mb-2 "><span class="badge bg-warning">Cancelled</span></td>
+                            <td><a class="btn btn-primary" href="" role="button">Enter Attendance</a></td>
+                        {% endif %}
+                    </tr>
+                    {% empty %}
+                            <p>student has no courses</p>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <!-- End Table with stripped rows -->
+  
+              </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+{% endblock %}

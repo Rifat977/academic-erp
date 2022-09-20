@@ -1,0 +1,66 @@
+{% extends '../asset/base.html' %}
+{% load static %}
+{% block content %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Attendence</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'backend:dashboard' %}">Home</a></li>
+          <li class="breadcrumb-item active">Classes</li>
+          <li class="breadcrumb-item active">Class Date</li>
+          <li class="breadcrumb-item active">Attendance</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"></h5>
+  
+                <!-- Table with stripped rows -->
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for m in m_list %}
+                        <tr>
+                            <td>{{ m.name }}</td>
+                            {% if not m.status %}
+                                <td class="p-3 mb-2 bg-danger text-white">Not Marked</td>
+                                <td>
+                                    <a class="btn btn-primary" href="{% url 't_marks_entry' m.id %}" role="button">Enter Marks</a>
+                                </td>
+    
+                            {% else %}
+                                <td class="p-3 mb-2 bg-success text-white">Marked</td>
+                                <td><a class="btn btn-warning" href="{% url 'edit_marks' m.id %}" role="button">Edit Marks</a> </td>
+                            {% endif %}
+                        </tr>
+                        {% empty %}
+                                <p>student has no courses</p>
+                        {% endfor %}
+    
+                      </tbody>
+                </table>
+                <!-- End Table with stripped rows -->
+
+              </form>
+
+              </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+{% endblock %}

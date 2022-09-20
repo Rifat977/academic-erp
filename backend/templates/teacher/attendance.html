@@ -1,0 +1,77 @@
+{% extends '../asset/base.html' %}
+{% load static %}
+{% block content %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Attendence</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'backend:dashboard' %}">Home</a></li>
+          <li class="breadcrumb-item active">Classes</li>
+          <li class="breadcrumb-item active">Class Date</li>
+          <li class="breadcrumb-item active">Attendance</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{ dept1.name }}</h5>
+
+                <form action="{% url 'backend:confirm' assc.id %}" method="post">
+                  {% csrf_token %}
+  
+                <!-- Table with stripped rows -->
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Student</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if c.student_set.all %}
+                    {% for s in c.student_set.all %}
+                    <tr>
+                    <td>{{s.name}}</td>
+                    <td>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+
+                                <label class="btn btn-outline-success active">
+                                    <input type="radio" name="{{ s.USN }}" id="option1" autocomplete="off" value="present" checked> Present
+                                </label>
+
+                                <label class="btn btn-outline-danger">
+                                    <input type="radio" name="{{ s.USN }}" id="option2" autocomplete="off" value="absent"> Absent
+                                </label>
+                        </div>
+                    </td>
+                    </tr>
+                    {% endfor %}
+
+                  {% else %}
+                    <tr>
+                      <td>No student in this class</td>
+                      <td></td>
+                    </tr>
+                  {% endif %}
+                  </tbody>
+                </table>
+                <input class="btn btn-primary" type="submit" value="Submit">
+
+                <!-- End Table with stripped rows -->
+
+              </form>
+
+              </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+{% endblock %}
