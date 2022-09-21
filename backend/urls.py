@@ -21,5 +21,8 @@ urlpatterns = [
         #marks
     path('teacher/<int:assign_id>/marks_list/', views.marks_list, name='marks_list'),
     path('teacher/<int:assign_id>/Students/Marks/', views.student_marks, name='student_marks'),
+    path('teacher/<int:marks_c_id>/marks_entry/', views.marks_entry, name='marks_entry'),
+    path('teacher/<int:marks_c_id>/Edit_marks/', views.edit_marks, name='edit_marks'),
+    path('teacher/<int:marks_c_id>/marks_entry/confirm/', views.marks_confirm, name='marks_confirm'),
 
 ]

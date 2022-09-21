@@ -177,3 +177,49 @@ def marks_list(request, assign_id):
     ass = get_object_or_404(Assign, id=assign_id)
     m_list = MarksClass.objects.filter(assign=ass)
     return render(request, 'teacher/marks_list.html', {'m_list': m_list})
+
+@login_required()
+def marks_entry(request, marks_c_id):
+    mc = get_object_or_404(MarksClass, id=marks_c_id)
+    ass = mc.assign
+    c = ass.class_id
+    context = {
+        'ass': ass,
+        'c': c,
+        'mc': mc,
+    }
+    return render(request, 'teacher/marks_entry.html', context)
+
+@login_required()
+def marks_confirm(request, marks_c_id):
+    mc = get_object_or_404(MarksClass, id=marks_c_id)
+    ass = mc.assign
+    cr = ass.course
+    cl = ass.class_id
+    for s in cl.student_set.all():
+        mark = request.POST[s.USN]
+        sc = StudentCourse.objects.get(course=cr, student=s)
+        m = sc.marks_set.get(name=mc.name)
+        m.marks1 = mark
+        m.save()
+    mc.status = True
+    mc.save()
+
+    return HttpResponseRedirect(reverse('backend:marks_list', args=(ass.id,)))
+
+
+@login_required()
+def edit_marks(request, marks_c_id):
+    mc = get_object_or_404(MarksClass, id=marks_c_id)
+    cr = mc.assign.course
+    stud_list = mc.assign.class_id.student_set.all()
+    m_list = []
+    for stud in stud_list:
+        sc = StudentCourse.objects.get(course=cr, student=stud)
+        m = sc.marks_set.get(name=mc.name)
+        m_list.append(m)
+    context = {
+        'mc': mc,
+        'm_list': m_list,
+    }
+    return render(request, 'teacher/edit_marks.html', context)

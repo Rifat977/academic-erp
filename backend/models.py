@@ -235,8 +235,18 @@ class Marks(models.Model):
     @property
     def total_marks(self):
         if self.name == 'Final Exam':
-            return 100
-        return 20
+            return 40
+        if self.name == 'Mid Term':
+            return 25
+        if self.name == 'Assignment':
+            return 5
+        if self.name == 'Viva':
+            return 5
+        if self.name == 'Presentation':
+            return 8
+        if self.name == 'Attendance':
+            return 7
+        return 15
 
 
 class MarksClass(models.Model):
@@ -250,8 +260,19 @@ class MarksClass(models.Model):
     @property
     def total_marks(self):
         if self.name == 'Final Exam':
-            return 100
-        return 20
+            return 40
+        if self.name == 'Mid Term':
+            return 25
+        if self.name == 'Assignment':
+            return 5
+        if self.name == 'Viva':
+            return 5
+        if self.name == 'Presentation':
+            return 8
+        if self.name == 'Attendance':
+            return 7
+        return 15
+
     
 class AttendanceRange(models.Model):
     start_date = models.DateField()
@@ -266,12 +287,13 @@ def daterange(start_date, end_date):
 
 
 days = {
-    'Monday': 1,
-    'Tuesday': 2,
-    'Wednesday': 3,
-    'Thursday': 4,
-    'Friday': 5,
-    'Saturday': 6,
+    'Saturday': 1,
+    'Sunday' : 2,
+    'Monday': 3,
+    'Tuesday': 4,
+    'Wednesday': 5,
+    'Thursday': 6,
+    'Friday': 7,
 }
 
 def create_marks(sender, instance, **kwargs):
@@ -342,6 +364,7 @@ def delete_marks(sender, instance, **kwargs):
 
 
 post_save.connect(create_marks, sender=Student)
+post_save.connect(create_marks, sender=Assign)
 post_save.connect(create_marks_class, sender=Assign)
 post_save.connect(create_attendance, sender=AssignTime)
 post_delete.connect(delete_marks, sender=Assign)
