@@ -11,6 +11,7 @@
         </a>
       </li>
 
+      {% if request.user.is_teacher %}
       <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'backend:classes' request.user.teacher.id 1 %}">
           <i class="bi bi-menu-button-wide"></i><span>Classes</span>
@@ -22,6 +23,7 @@
           <i class="bi bi-menu-button-wide"></i><span>Marks</span>
         </a>
       </li>
+      {% endif %}
 
     </ul>
 

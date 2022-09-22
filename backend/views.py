@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 from django.contrib import messages
-from .decorators import unauthenticated_user
+from .decorators import unauthenticated_user, allowed_users
 from .models import Student, Teacher, Assign, AttendanceClass, AttendanceTotal, Attendance, StudentCourse, MarksClass
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -41,6 +41,9 @@ def loginPage(request):
 def logoutPage(request):
     logout(request)
     return redirect('backend:login')
+
+def profile(request):
+    return render(request, 'profile.html')
 
 # Teacher Views
 

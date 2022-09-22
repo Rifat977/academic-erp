@@ -8,9 +8,8 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{% url 'backend:dashboard' %}">Home</a></li>
-          <li class="breadcrumb-item active">Classes</li>
-          <li class="breadcrumb-item active">Class Date</li>
-          <li class="breadcrumb-item active">Attendance</li>
+          <li class="breadcrumb-item active"><a href="{% url 'backend:classes' request.user.teacher.id 1 %}">Classes</a></li>
+          <li class="breadcrumb-item active">Extra Class</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->

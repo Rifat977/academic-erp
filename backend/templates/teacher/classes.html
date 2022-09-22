@@ -36,9 +36,9 @@
                       <td>{{item.course}}</td>
                       <td>
                         {% if choice == 1 %}
-                        <a class="btn btn-primary" href="{% url 'backend:class_date' item.id %}" role="button">Enter Attendance</a>
-                        <a class="btn btn-warning" href="{% url 'backend:extra_class' item.id %}">Extra Class</a>
-                        <a class="btn btn-danger" href="{% url 'backend:students' item.id %}">View Students</a>
+                        <a class="btn btn-primary mb-1" href="{% url 'backend:class_date' item.id %}" role="button">Enter Attendance</a>
+                        <a class="btn btn-warning mb-1" href="{% url 'backend:extra_class' item.id %}">Extra Class</a>
+                        <a class="btn btn-danger mb-1" href="{% url 'backend:students' item.id %}">View Students</a>
 
                     {% elif choice == 2 %}
                         <a class="btn btn-primary" href="{% url 'backend:marks_list' item.id %}" role="button">Enter Marks</a>
