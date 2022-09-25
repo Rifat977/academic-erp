@@ -25,5 +25,12 @@ urlpatterns = [
     path('teacher/<int:marks_c_id>/marks_entry/', views.marks_entry, name='marks_entry'),
     path('teacher/<int:marks_c_id>/Edit_marks/', views.edit_marks, name='edit_marks'),
     path('teacher/<int:marks_c_id>/marks_entry/confirm/', views.marks_confirm, name='marks_confirm'),
+        #timetable
+    path('teacher/<slug:teacher_id>/t_timetable/', views.t_timetable, name='t_timetable'),
+
+    #admin
+        #add user
+    path('add/teacher', views.add_teacher, name='add_teacher'),
+    path('add/student', views.add_student, name='add_student'),
 
 ]

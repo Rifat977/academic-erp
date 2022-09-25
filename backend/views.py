@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 from django.contrib import messages
 from .decorators import unauthenticated_user, allowed_users
-from .models import Student, Teacher, Assign, AttendanceClass, AttendanceTotal, Attendance, StudentCourse, MarksClass
+from .models import Student, Teacher, Dept, Assign, AttendanceClass, AttendanceTotal, Attendance, StudentCourse, MarksClass, AssignTime, DAYS_OF_WEEK, time_slots
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
@@ -20,7 +20,7 @@ def dashboard(request):
     if request.user.is_student:
         return render(request, 'student/dashboard.html')
     if request.user.is_superuser:
-        return redirect('admin/')
+        return render(request, 'admin/dashboard.html')
     return render(request, 'login.html')
 
 @unauthenticated_user
@@ -226,3 +226,39 @@ def edit_marks(request, marks_c_id):
         'm_list': m_list,
     }
     return render(request, 'teacher/edit_marks.html', context)
+
+@login_required()
+def t_timetable(request, teacher_id):
+    asst = AssignTime.objects.filter(assign__teacher_id=teacher_id)
+    class_matrix = [[True for i in range(10)] for j in range(7)]
+    for i, d in enumerate(DAYS_OF_WEEK):
+        t = 0
+        for j in range(10):
+            if j == 0:
+                class_matrix[i][0] = d[0]
+                continue
+            # if j == 4 or j == 8:
+            #     continue
+            try:
+                a = asst.get(period=time_slots[t][0], day=d[0])
+                class_matrix[i][j] = a
+            except AssignTime.DoesNotExist:
+                pass
+            t += 1
+
+    context = {
+        'class_matrix': class_matrix,
+    }
+    return render(request, 'teacher/timetable.html', context)
+
+@login_required
+def add_teacher(request):
+    dept = Dept.objects.all()
+    context = {
+        'dept':dept
+    }
+    return render(request, 'admin/add_teacher.html', context)
+
+@login_required
+def add_student(request):
+    return render(request, 'admin/add_student.html')

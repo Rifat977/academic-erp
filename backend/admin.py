@@ -11,9 +11,13 @@ def daterange(start_date, end_date):
 class AttendanceClassAdmin(admin.ModelAdmin):
     list_display = ('assign', 'date', 'status')
     ordering = ['assign', 'date']
-
+    
+# class AssignTimeInline(admin.TabularInline):
+#     model = AssignTime
+#     extra = 0
 
 class AssignAdmin(admin.ModelAdmin):
+    # inlines = [AssignTimeInline]
     list_display = ('class_id', 'course', 'teacher')
 
 class AssignTimeAdmin(admin.ModelAdmin):

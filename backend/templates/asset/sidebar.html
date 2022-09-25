@@ -23,6 +23,25 @@
           <i class="bi bi-menu-button-wide"></i><span>Marks</span>
         </a>
       </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'backend:t_timetable' request.user.teacher.id %}">
+          <i class="bi bi-menu-button-wide"></i><span>Routine</span>
+        </a>
+      </li>
+      {% endif %}
+
+      {% if request.user.is_superuser %}
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'backend:add_teacher' %}">
+          <i class="bi bi-menu-button-wide"></i><span>Add Teacher</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'backend:add_student' %}">
+          <i class="bi bi-menu-button-wide"></i><span>Add Student</span>
+        </a>
+      </li>
       {% endif %}
 
     </ul>
